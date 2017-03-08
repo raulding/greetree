@@ -1,0 +1,7 @@
+awk -F", " '{type[$1] = type[$1]""","$2; for(i=3;i<NF;i++)tags[$1] = tags[$1]""","$i}END{for(x in type){split(type[x],t,",");for(i in t){tmp[t[i]]++;}split(tags[x],g,",");for(i in g){tmp2[g[i]]++;}split(x,k," ");printf("%s ",k[1]);for(i in tmp){if(i!="")printf("%s,",i);}printf(" ");for(i in tmp2){if(i!="")printf("%s,",i);} printf("\n"); delete t; delete g; delete tmp; delete tmp2;}}' yyb_app_tags.dat | awk '{for(i=1;i<=NF;i++)printf("%s ",gensub(/(.*),/,"\\1",1,$i));printf("\n") }' > yyb_app_tags_final.dat
+
+
+scrapy crawl yyb -s LOG_FILE=yyb.log -o items2.json
+
+scrapy crawl yyb_tag -s LOG_FILE=yyb.log -o items.json
+
